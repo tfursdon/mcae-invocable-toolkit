@@ -34,15 +34,17 @@ public with sharing class Invocable_UpsertProspectByEmail {
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
         req.SetEndpoint('callout:Account_Engagement_API/v5/objects/prospects/do/upsertLatestByEmail');
+        req.setHeader('Content-Type', 'application/json');
         req.setHeader('Pardot-Business-Unit-Id', System.Label.Account_Engagement_Business_Unit_Id);
         req.setMethod('POST');
         req.setBody(JSON.serialize(requestBody));
 
+        system.debug('Request body: ' + JSON.serialize(requestBody));
+
         Http http = new Http();
         HTTPResponse res = http.send(req);
 
-        system.debug('Callout response: ');
-        system.debug(res.getBody());
+        system.debug('Response: ' + res.getBody());
 
         Map<String, Object> responseBody = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
         prospectId = String.valueOf(responseBody.get('id'));
