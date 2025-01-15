@@ -15,8 +15,6 @@ public with sharing class Invocable_UpsertProspectByEmail {
         }
 
         Prospect prospect = prospectList[0];
-        String prospectId = null;
-
         system.debug('Recieved request to upsert prospect with name: ' + prospect.firstName + ' ' + prospect.lastName + ' and email: ' + prospect.email);
 
         //Set up request body in line with documentation (https://developer.salesforce.com/docs/marketing/pardot/guide/prospect-v5.html)
@@ -30,6 +28,9 @@ public with sharing class Invocable_UpsertProspectByEmail {
         requestBody.put('prospect', prospectObject);
         requestBody.put('fields', new List<String>{'id', 'email'}); //Specifies which fields should be returned in the response body
         requestBody.put('secondaryDeletedSearch', true); //Includes deleted prospects in search. If one is found, it is undeleted and updated
+        
+        String requestBodyAsString = JSON.serialize(requestBody);
+        system.debug('Request body: ' + requestBodyAsString);
 
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
@@ -37,17 +38,15 @@ public with sharing class Invocable_UpsertProspectByEmail {
         req.setHeader('Content-Type', 'application/json');
         req.setHeader('Pardot-Business-Unit-Id', System.Label.Account_Engagement_Business_Unit_Id);
         req.setMethod('POST');
-        req.setBody(JSON.serialize(requestBody));
+        req.setBody(requestBodyAsString);
 
-        system.debug('Request body: ' + JSON.serialize(requestBody));
-
+        //Call MCAE to upsert the prospect record
         Http http = new Http();
         HTTPResponse res = http.send(req);
-
         system.debug('Response: ' + res.getBody());
 
         Map<String, Object> responseBody = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
-        prospectId = String.valueOf(responseBody.get('id'));
+        String prospectId = String.valueOf(responseBody.get('id'));
 
         if(prospectId != null) {
             system.debug('Prospect upserted successfully against id: ' + prospectId);
