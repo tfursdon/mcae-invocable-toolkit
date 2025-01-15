@@ -1,4 +1,4 @@
-/* Description: Test class for invocable_getAccountEngagementProspectId.
+/* Description: Test class for Invocable_getAccountEngagementProspectId.
  * Author: Thomas Fursdon (Merkle)
  * History:
  * 13 Jan 2025: Initial version.
