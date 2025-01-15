@@ -5,7 +5,7 @@
  */
 
 public with sharing class Invocable_UpsertProspectByEmail {
-    @InvocableMethod(label = 'Upsert Account Engagement Prospect' description='Upserts an Account Engagement prospect by email address.')
+    @InvocableMethod(label = 'MCAE - Upsert Prospect By Email' description='Upserts an Account Engagement prospect by email address.')
     public static List<String> upsertProspect(List<Prospect> prospectList) {
 
         //Invocable methods expect a list of a single value from a Flow.

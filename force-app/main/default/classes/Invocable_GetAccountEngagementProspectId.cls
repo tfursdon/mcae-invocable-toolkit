@@ -5,7 +5,7 @@
  */
 
 public with sharing class Invocable_GetAccountEngagementProspectId {
-    @InvocableMethod(label = 'Get Account Engagement Prospect Id' description='Returns a prospect Id using an email address if the prospect exists in Account Engagement.')
+    @InvocableMethod(label = 'MCAE - Get Prospect Id' description='Returns a prospect Id using an email address if the prospect exists in Account Engagement.')
     public static List<String> getProspectId(List<String> prospectEmailList) {
 
         //Invocable methods expect a list of a single value from a Flow.
