@@ -32,8 +32,10 @@ public with sharing class Invocable_SendOneToOneEmail {
         requestBody.put('name', emailDetails.name);
         requestBody.put('prospectId', emailDetails.prospectId);
         requestBody.put('isOperational', true);
+        requestBody.put('campaignId', Integer.valueOf(System.Label.Account_Engagement_One_to_One_Campaign_Id));
+        requestBody.put('senderOptions', new List<Map<String, Object>>{senderOptions});
+        requestBody.put('replyToOptions', new List<Map<String, Object>>{replyToOptions});
 
-        //"campaignId" : 1001
         //"folderId" : 500
         //"trackerDomainId": 5
         //"scheduledTime" : "2034-07-25T14:01:17-04:00"
@@ -55,8 +57,6 @@ public with sharing class Invocable_SendOneToOneEmail {
                 return new List<String>{null}; //No email template found
             }
         }
-        requestBody.put('senderOptions', new List<Map<String, Object>>{senderOptions});
-        requestBody.put('replyToOptions', new List<Map<String, Object>>{replyToOptions});
         
         String requestBodyAsString = JSON.serialize(requestBody);
         system.debug('Request body: ' + requestBodyAsString);
