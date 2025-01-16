@@ -39,7 +39,7 @@ public with sharing class Invocable_SendOneToOneEmail {
         //"scheduledTime" : "2034-07-25T14:01:17-04:00"
         
         if(emailDetails.emailTemplateId.isNumeric()) { //Account Engagement Email Templates use strictly numberic Ids.
-            requestBody.put('emailTemplateId', emailDetails.emailTemplateId);
+            requestBody.put('emailTemplateId', Integer.valueOf(emailDetails.emailTemplateId));
             if(emailDetails.subject != null && emailDetails.subject != '') {
                 requestBody.put('subject', emailDetails.subject);
             }
