@@ -86,7 +86,7 @@ public with sharing class Invocable_SendOneToOneEmail {
         public String subject;
 
         @invocableVariable(label='MCAE Prospect Id' required=true)
-        public String prospectId;
+        public Integer prospectId;
 
         @invocableVariable(label='Email Template Id' required=true) 
         public String emailTemplateId; //This can be either a MCAE template Id, or an Email Content Id from Salesforce
