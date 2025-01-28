@@ -18,7 +18,7 @@
          Invocable_SendOneToOneEmail.EmailDetails emailDetails = new Invocable_SendOneToOneEmail.EmailDetails();
          emailDetails.name = 'Test Send';
          emailDetails.subject = 'Test Email';
-         emailDetails.prospectId = 234;
+         emailDetails.prospectId = '234';
          emailDetails.emailTemplateId = '123';
          emailDetails.senderName = 'John Doe';
          emailDetails.senderAddress = 'noreply@example.com';
