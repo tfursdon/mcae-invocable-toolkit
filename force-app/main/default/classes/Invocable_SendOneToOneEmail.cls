@@ -30,12 +30,13 @@ public with sharing class Invocable_SendOneToOneEmail {
 
         Map<String,Object> requestBody = new Map<String,Object>();
         requestBody.put('name', emailDetails.name);
-        requestBody.put('prospectId', emailDetails.prospectId);
+        requestBody.put('prospectId', Integer.valueOf(emailDetails.prospectId));
         requestBody.put('isOperational', true);
         requestBody.put('campaignId', Integer.valueOf(System.Label.Account_Engagement_One_to_One_Campaign_Id));
         requestBody.put('senderOptions', new List<Map<String, Object>>{senderOptions});
         requestBody.put('replyToOptions', new List<Map<String, Object>>{replyToOptions});
 
+        /*** Other possible body parameters ***/
         //"folderId" : 500
         //"trackerDomainId": 5
         //"scheduledTime" : "2034-07-25T14:01:17-04:00"
@@ -86,7 +87,7 @@ public with sharing class Invocable_SendOneToOneEmail {
         public String subject;
 
         @invocableVariable(label='MCAE Prospect Id' required=true)
-        public Integer prospectId;
+        public String prospectId; //This should be an integer, but is configured as a String input as Ids are typically held in text fields, and for consistency with Invocable_GetAccountEngagementProspectId, which returns a String
 
         @invocableVariable(label='Email Template Id' required=true) 
         public String emailTemplateId; //This can be either a MCAE template Id, or an Email Content Id from Salesforce
