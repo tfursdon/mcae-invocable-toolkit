@@ -14,14 +14,15 @@ public with sharing class Invocable_GetEmailTemplateId {
             return new List<String>{null};
         }
 
-        String templateName = templateNames[0];
         String templateId = null;
+        String templateName = EncodingUtil.urlEncode(templateNames[0], 'UTF-8');
+        templateName = templateName.replaceAll('\\+', '%20'); //urlEncode returns an encoded URL that uses the '+' character for spaces.
 
         system.debug('Recieved request to query Account Engagement email templates with name: ' + templateName);
 
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
-        req.SetEndpoint('callout:Account_Engagement_API/v5/objects/email-templates?fields=id,name,isOneToOneEmail&name=' + templateName.replaceAll(' ', '%20'));
+        req.SetEndpoint('callout:Account_Engagement_API/v5/objects/email-templates?fields=id,name,isOneToOneEmail&name=' + templateName);
         req.setHeader('Pardot-Business-Unit-Id', System.Label.Account_Engagement_Business_Unit_Id);
         req.setMethod('GET');
 

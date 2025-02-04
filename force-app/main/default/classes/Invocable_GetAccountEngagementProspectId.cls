@@ -1,4 +1,4 @@
-/* Description: Queries Account Engagement for the first prospect that matches a supplied email address.
+/* Description: Queries Account Engagement for the first prospect that matches a supplied email address. API Documentation: https://developer.salesforce.com/docs/marketing/pardot/guide/prospect-v5.html
  * Author: Thomas Fursdon (Merkle)
  * History:
  * 13 Jan 2025: Initial version.
@@ -21,7 +21,7 @@ public with sharing class Invocable_GetAccountEngagementProspectId {
 
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
-        req.SetEndpoint('callout:Account_Engagement_API/v5/objects/prospects?fields=id&email='+ prospectEmail);
+        req.SetEndpoint('callout:Account_Engagement_API/v5/objects/prospects?fields=id&email=' + prospectEmail + '&orderBy=updatedAt%20desc');
         req.setHeader('Pardot-Business-Unit-Id', System.Label.Account_Engagement_Business_Unit_Id);
         req.setMethod('GET');
 
