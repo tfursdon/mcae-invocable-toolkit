@@ -18,12 +18,13 @@ public with sharing class Invocable_GetAccountEngagementProspectId {
         prospectEmail = EncodingUtil.urlEncode(prospectEmail, 'UTF-8'); //Encode the email address to ensure any special characters can be used in the callout URL (e.g. '+' characters)
         
         String prospectId = null;
-
+        //URL-encode the email address to handle special characters
+        String encodedEmail = EncodingUtil.urlEncode(prospectEmail, 'UTF-8');
         system.debug('Recieved request to query Account Engagement prospects with email: ' + prospectEmail);
 
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
-        req.SetEndpoint('callout:Account_Engagement_API/v5/objects/prospects?fields=id&email=' + prospectEmail + '&orderBy=updatedAt%20desc');
+        req.SetEndpoint('callout:Account_Engagement_API/v5/objects/prospects?fields=id&email=' + encodedEmail + '&orderBy=updatedAt%20desc');
         req.setHeader('Pardot-Business-Unit-Id', System.Label.Account_Engagement_Business_Unit_Id);
         req.setMethod('GET');
 
