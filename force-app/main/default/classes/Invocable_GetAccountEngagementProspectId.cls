@@ -15,6 +15,8 @@ public with sharing class Invocable_GetAccountEngagementProspectId {
         }
 
         String prospectEmail = prospectEmailList[0];
+        prospectEmail = EncodingUtil.urlEncode(prospectEmail, 'UTF-8'); //Encode the email address to ensure any special characters can be used in the callout URL (e.g. '+' characters)
+        
         String prospectId = null;
 
         system.debug('Recieved request to query Account Engagement prospects with email: ' + prospectEmail);
