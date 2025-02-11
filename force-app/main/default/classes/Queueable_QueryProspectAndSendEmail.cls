@@ -1,5 +1,6 @@
 /* Description: This class contains a method that is designed to perform all actions required to asynchronously send a one-to-one email to a Contact or Lead record using MCAE.
  * This may be required due to uncommitted work errors when attempting to synchronously send emails inside a flow/trigger loop.
+ * Tested by Test_QueueOneToOneEmail.
  * Author: Thomas Fursdon (Merkle)
  * History:
  * 11 Feb 2025: Initial version.
