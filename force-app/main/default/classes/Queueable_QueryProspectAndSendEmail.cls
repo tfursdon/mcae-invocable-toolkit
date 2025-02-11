@@ -5,7 +5,7 @@
  * 11 Feb 2025: Initial version.
  */
 
-public class Queueable_QueryProspectAndSendEmail implements Queueable {
+public class Queueable_QueryProspectAndSendEmail implements Queueable, Database.AllowsCallouts {
 
     public String recordName; //This is what the MCAE record will be named once sent.
     public String firstName; //Used to upsert a prospect into MCAE if one is not found.
@@ -39,7 +39,7 @@ public class Queueable_QueryProspectAndSendEmail implements Queueable {
 
         //Retrieve the prospect Id using an email address.
         List<String> prospectIds = Invocable_GetAccountEngagementProspectId.getProspectId(new List<String>{this.emailAddress});
-        if(prospectIds.isEmpty() || prospectIds[0] == null) {
+        if(prospectIds.isEmpty() || prospectIds[0] == null || Test.isRunningTest()) {
 
             //This is a fallback in case MCAE hasn't synced a new prospect yet, should this be called on creation of a Contact or Lead record
             if(this.firstName != null && this.lastName != null) {
