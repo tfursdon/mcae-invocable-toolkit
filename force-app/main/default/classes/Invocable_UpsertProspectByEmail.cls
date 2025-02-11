@@ -15,7 +15,6 @@ public with sharing class Invocable_UpsertProspectByEmail {
         }
 
         Prospect prospect = prospectList[0];
-        system.debug('Recieved request to upsert prospect with name: ' + prospect.firstName + ' ' + prospect.lastName + ' and email: ' + prospect.email);
 
         //Set up request body in line with documentation (https://developer.salesforce.com/docs/marketing/pardot/guide/prospect-v5.html)
         Map<String,Object> prospectObject = new Map<String,Object>();
@@ -30,7 +29,6 @@ public with sharing class Invocable_UpsertProspectByEmail {
         requestBody.put('secondaryDeletedSearch', true); //Includes deleted prospects in search. If one is found, it is undeleted and updated
         
         String requestBodyAsString = JSON.serialize(requestBody);
-        system.debug('Request body: ' + requestBodyAsString);
 
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
@@ -43,14 +41,15 @@ public with sharing class Invocable_UpsertProspectByEmail {
         //Call MCAE to upsert the prospect record
         Http http = new Http();
         HTTPResponse res = http.send(req);
-        system.debug('Response: ' + res.getBody());
-
         Map<String, Object> responseBody = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
-        String prospectId = String.valueOf(responseBody.get('id'));
 
-        if(prospectId != null) {
-            system.debug('Prospect upserted successfully against id: ' + prospectId);
-        } else {
+        try {
+            String prospectId = String.valueOf(responseBody.get('id'));
+        } catch (Exception e) {
+            system.debug('No id returned in callout response. Response: ' + res.getBody());
+        }
+
+        if(prospectId == null) {
             system.debug('Upsert unsuccessful. Id not received in MCAE response.');
         }
 

@@ -24,8 +24,6 @@ public with sharing class Invocable_GetAccountEngagementProspectId {
 
         //Encode the email address before @ to ensure any special characters can be used in the callout URL (e.g. '+' characters)
         String encodedEmail = EncodingUtil.urlEncode(emailSections[0], 'UTF-8') + '@' + emailSections[1];
-        system.debug('Recieved request to query Account Engagement prospects with email: ' + encodedEmail);
-        
         String prospectId = null;
 
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
@@ -46,7 +44,6 @@ public with sharing class Invocable_GetAccountEngagementProspectId {
         if(responseValues.size() > 0) {
             Map<String,Object> prospect = (Map<String,Object>)(responseValues[0]);
             prospectId = String.valueOf(prospect.get('id'));
-            system.debug('Prospect found with Id: ' + prospectId);
         }
         return new List<String>{prospectId};
     }

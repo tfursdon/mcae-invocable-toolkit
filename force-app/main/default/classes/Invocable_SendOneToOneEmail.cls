@@ -16,7 +16,6 @@ public with sharing class Invocable_SendOneToOneEmail {
         }
 
         EmailDetails emailDetails = EmailDetailsList[0];
-        system.debug('Recieved request to send email: ' + emailDetails.name);
 
         //Set up request body in line with documentation (https://developer.salesforce.com/docs/marketing/pardot/guide/email-v5.html)
         Map<String,Object> senderOptions = new Map<String,Object>();
@@ -46,7 +45,6 @@ public with sharing class Invocable_SendOneToOneEmail {
             if(emailDetails.subject != null && emailDetails.subject != '') {
                 requestBody.put('subject', emailDetails.subject);
             }
-            system.debug('Email Template Id is for an Account Engagement Email Template.');
         } else { //If a Salesforce Email Content Id has been supplied, we need to map its fields to the request
 
             EmailContent emailContent = [SELECT Id, Name, Subject, HtmlBody, TextBody FROM EmailContent WHERE Id = :emailDetails.emailTemplateId LIMIT 1];
@@ -73,10 +71,9 @@ public with sharing class Invocable_SendOneToOneEmail {
         //Call MCAE to send the email
         Http http = new Http();
         HTTPResponse res = http.send(req);
-        system.debug('Response: ' + res.getBody()); //The response will include any fields we specified in the callout, so we should expect an Id back if successful.
 
         Map<String, Object> responseBody = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
-        return new List<String>{String.valueOf(responseBody.get('id'))};
+        return new List<String>{String.valueOf(responseBody.get('id'))}; //The response will include any fields we specified in the callout, so we should expect an Id back if successful.
     }
 
     public class EmailDetails {

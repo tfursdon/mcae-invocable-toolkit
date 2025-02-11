@@ -18,8 +18,6 @@ public with sharing class Invocable_GetEmailTemplateId {
         String templateName = EncodingUtil.urlEncode(templateNames[0], 'UTF-8');
         templateName = templateName.replaceAll('\\+', '%20'); //urlEncode returns an encoded URL that uses the '+' character for spaces.
 
-        system.debug('Recieved request to query Account Engagement email templates with name: ' + templateName);
-
         //Set up the Http request. The Named Crediential must be called 'Account_Engagement_API'. If this changes, then the callout endpoint should be updated.
         HttpRequest req = new HttpRequest();
         req.SetEndpoint('callout:Account_Engagement_API/v5/objects/email-templates?fields=id,name,isOneToOneEmail&name=' + templateName);
@@ -29,16 +27,18 @@ public with sharing class Invocable_GetEmailTemplateId {
         Http http = new Http();
         HTTPResponse res = http.send(req);
 
-        system.debug('Callout response: ');
-        system.debug(res.getBody());
-
         Map<String, Object> responseBody = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
-        List<Object> responseValues = (List<Object>)responseBody.get('values');
+
+        try {
+            List<Object> responseValues = (List<Object>)responseBody.get('values');
+        } catch (Exception e) {
+            system.debug('Values missing from callout. Response: ');
+            system.debug(res.getBody());
+        }
 
         if(responseValues.size() > 0) {
             Map<String,Object> template = (Map<String,Object>)(responseValues[0]);
             templateId = String.valueOf(template.get('id'));
-            system.debug('Email template found with Id: ' + templateId);
         }
 
         return new List<String>{templateId};
