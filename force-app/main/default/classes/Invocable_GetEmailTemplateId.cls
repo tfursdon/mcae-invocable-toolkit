@@ -31,16 +31,15 @@ public with sharing class Invocable_GetEmailTemplateId {
 
         try {
             List<Object> responseValues = (List<Object>)responseBody.get('values');
+            if(responseValues.size() > 0) {
+                Map<String,Object> template = (Map<String,Object>)(responseValues[0]);
+                templateId = String.valueOf(template.get('id'));
+            }
         } catch (Exception e) {
             system.debug('Values missing from callout. Response: ');
             system.debug(res.getBody());
         }
-
-        if(responseValues.size() > 0) {
-            Map<String,Object> template = (Map<String,Object>)(responseValues[0]);
-            templateId = String.valueOf(template.get('id'));
-        }
-
+        
         return new List<String>{templateId};
     }
 }

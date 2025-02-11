@@ -15,6 +15,7 @@ public with sharing class Invocable_UpsertProspectByEmail {
         }
 
         Prospect prospect = prospectList[0];
+        String prospectId = null;
 
         //Set up request body in line with documentation (https://developer.salesforce.com/docs/marketing/pardot/guide/prospect-v5.html)
         Map<String,Object> prospectObject = new Map<String,Object>();
@@ -44,7 +45,7 @@ public with sharing class Invocable_UpsertProspectByEmail {
         Map<String, Object> responseBody = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
 
         try {
-            String prospectId = String.valueOf(responseBody.get('id'));
+            prospectId = String.valueOf(responseBody.get('id'));
         } catch (Exception e) {
             system.debug('No id returned in callout response. Response: ' + res.getBody());
         }
