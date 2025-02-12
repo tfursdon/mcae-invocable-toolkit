@@ -53,8 +53,8 @@ public with sharing class Invocable_QueueOneToOneEmail {
         public String emailAddress;
 
         @invocableVariable(label='Subject'
-        description='This is the subject of the email.'
-        required=true)
+        description='This is the subject of the email. If left blank, the template\'s subject will be used.'
+        required=false)
         public String subject;
 
         @invocableVariable(label='Email Template Name'

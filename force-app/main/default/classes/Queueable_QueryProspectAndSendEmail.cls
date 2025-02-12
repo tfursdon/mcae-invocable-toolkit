@@ -39,7 +39,11 @@ public class Queueable_QueryProspectAndSendEmail implements Queueable, Database.
         }
 
         //Retrieve the prospect Id using an email address.
-        List<String> prospectIds = Invocable_GetAccountEngagementProspectId.getProspectId(new List<String>{this.emailAddress});
+        Invocable_GetAccountEngagementProspectId.ProspectDetails prospectDetails = new Invocable_GetAccountEngagementProspectId.ProspectDetails();
+        prospectDetails.firstName = this.firstName;
+        prospectDetails.email = this.emailAddress;
+        
+        List<String> prospectIds = Invocable_GetAccountEngagementProspectId.getProspectId(new List<Invocable_GetAccountEngagementProspectId.ProspectDetails>{prospectDetails});
         if(prospectIds.isEmpty() || prospectIds[0] == null || Test.isRunningTest()) {
 
             //This is a fallback in case MCAE hasn't synced a new prospect yet, should this be called on creation of a Contact or Lead record

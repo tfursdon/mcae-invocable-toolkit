@@ -14,6 +14,7 @@ public with sharing class Test_GetAccountEngagementProspectId {
         Map<String, Object> responseObject = new Map<String, Object>();
         Map<String, Object> responseListObject = new Map<String, Object>();
         responseListObject.put('id', 123);
+        responseListObject.put('firstName', 'Test');
         responseListObject.put('email', 'test@example.com');
         responseObject.put('values', new List<Object>{responseListObject});
         String responseBody = JSON.serialize(responseObject);
@@ -22,7 +23,12 @@ public with sharing class Test_GetAccountEngagementProspectId {
 
         //Utilise a generic mock HTTP response generator
         Test.setMock(HttpCalloutMock.class, new Test_MockHttpResponseGenerator(200, responseBody));
-        List<String> response = Invocable_GetAccountEngagementProspectId.getProspectId(new List<String>{'test@example.com'});
+
+        Invocable_GetAccountEngagementProspectId.ProspectDetails prospectDetails = new Invocable_GetAccountEngagementProspectId.ProspectDetails();
+        prospectDetails.firstName = 'Test';
+        prospectDetails.email = 'test@example.com';
+
+        List<String> response = Invocable_GetAccountEngagementProspectId.getProspectId(new List<Invocable_GetAccountEngagementProspectId.ProspectDetails>{prospectDetails});
         system.assertEquals('123', response[0]);
 
         Test.stopTest();

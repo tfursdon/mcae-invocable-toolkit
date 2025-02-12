@@ -16,6 +16,7 @@ public with sharing class Test_QueueOneToOneEmail {
 
         responseListObject.put('id', 123);
         responseListObject.put('email', 'test@example.com');
+        responseListObject.put('firstName', 'John');
         responseListObject.put('name', 'Test Email Template');
 
         responseObject.put('id', 123);
