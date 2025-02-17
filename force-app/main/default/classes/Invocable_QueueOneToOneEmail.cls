@@ -16,7 +16,7 @@ public with sharing class Invocable_QueueOneToOneEmail {
         queueableEmailSend.firstName = queuedEmailDetails.firstName ?? null;
         queueableEmailSend.lastName = queuedEmailDetails.lastName ?? null;
         queueableEmailSend.emailAddress = queuedEmailDetails.emailAddress;
-        queueableEmailSend.subject = queuedEmailDetails.subject;
+        queueableEmailSend.subject = queuedEmailDetails.subject ?? null;
         queueableEmailSend.emailTemplateName = queuedEmailDetails.emailTemplateName;
         queueableEmailSend.senderName = queuedEmailDetails.senderName;
         queueableEmailSend.senderEmailAddress = queuedEmailDetails.senderEmailAddress;
