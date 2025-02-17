@@ -33,7 +33,7 @@ public class Queueable_QueryProspectAndSendEmail implements Queueable, Database.
 
     public void execute(System.QueueableContext context) {
 
-        if(this.emailAddress == null || this.emailTemplateName == null || this.subject == null || this.senderName == null || this.senderEmailAddress == null) {
+        if(this.emailAddress == null || this.emailTemplateName == null || this.senderName == null || this.senderEmailAddress == null) {
             system.debug('Required fields missing. Terminating.');
             return;
         }
